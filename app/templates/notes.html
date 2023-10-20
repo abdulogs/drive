@@ -1,0 +1,153 @@
+{% extends "layouts/secondary.html" %}
+
+{% load static %}
+
+{% load helpers %}
+
+{% block title %} Notes - {% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item">
+    <a href="{% url 'notes' %}" class="text-decoration-none text-dark">Notes</a>
+</li>
+<li class="breadcrumb-item fw-bold text-dark active">All</li>
+{% endblock %}
+
+{% block content %}
+<div class="card shadow  bg-gray-700 rounded-4 border-0 h-100">
+    <div class="card-header py-2 bg-transparent border-0">
+        <div class="d-flex align-items-center">
+            <h3 class="card-title m-0 d-flex align-items-center me-auto">
+                <b class="bx bx-edit p-2 bg-dark text-primary rounded-circle me-1"></b>
+                <div class="d-flex flex-column ms-1">
+                    <b class="font-20 text-white">Notes</b>
+                    <div class="breadcrumb font-12 m-0 mt-1">
+                        <a href="{% url 'index' %}" class="breadcrumb-item text-decoration-none text-white bx bx-home">
+                        </a>
+                        <a href="{% url 'notes' %}" class="breadcrumb-item text-decoration-none text-white">
+                            Notes
+                        </a>
+                        <a href="javascript:void(0)" class="breadcrumb-item text-decoration-none text-primary">All</a>
+                    </div>
+                </div>
+            </h3>
+            <div class="d-flex align-items-center ms-auto">
+                <button class="btn btn-dark shadow-sm font-14 fw-bold rounded-pill d-flex align-items-center createBtn">
+                    <span class="bx bx-plus-circle me-1"></span> New
+                </button>
+            </div>
+        </div>
+        <form id="filter" autocomplete="off">
+            <div class="row align-items-center">
+                <div class="col-sm-3">
+                    <div class="input-group font-12 px-2 bg-dark rounded-2 my-2">
+                        <input type="text" class="form-control shadow-none text-white border-0 rounded-0 bg-dark font-14"
+                            id="search" placeholder="Search...">
+                        <button
+                            class="input-group-text bx bx-search shadow-none border-0 bg-transparent rounded-0 font-16 text-white"
+                            type="submit"></button>
+                    </div>
+                </div>
+                <div class="col-sm-9 d-flex">
+                    <div class="d-flex align-items-center my-2">
+                        <span class="bx bx-sort-alt-2 font-16 text-primary me-2"></span>
+                        <span class="input-group-text fw-bold bg-transparent border-0 p-0 text-white">Sort</span>
+                        <select id="ordering"
+                            class="form-select form-control shadow-none border-0 bg-gray-700 font-14 text-white">
+                            <option value="-id">Recent</option>
+                            <option value="id">Oldest</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center my-2">
+                        <span class="bx bx-category-alt font-16 text-primary me-2"></span>
+                        <span class="input-group-text fw-bold bg-transparent border-0 p-0 text-white">Records</span>
+                        <select id="limit"
+                            class="form-select form-control shadow-none border-0 bg-gray-700 font-14 text-white">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="80">80</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body p-0 table-responsive h-100">
+        <table class="table m-0">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th class="font-14 text-nowrap fw-bold border-0 px-3">Name</th>
+                    <th class="font-14 text-nowrap fw-bold border-0">Created by</th>
+                    <th class="font-14 text-nowrap fw-bold border-0">Created at</th>
+                    <th class="font-14 text-nowrap fw-bold border-0 px-3">Controls</th>
+                </tr>
+            </thead>
+            <tbody id="listing" class="font-14"></tbody>
+        </table>
+    </div>
+    <div class="card-footer py-2 bg-transparent d-flex align-items-center">
+        <p class="m-0 font-14 fw-bold text-white" id="totalCount"></p>
+        <div class="d-flex align-items-center ms-auto">
+            <button type="button" class="btn rounded-pill me-1 btn-dark px-3 fw-bold font-12" id="previousBtn"
+                value="1">
+                Previous
+            </button>
+            <button type="button" class="btn rounded-pill ms-1 btn-dark px-3 fw-bold font-12" id="nextBtn" value="1">
+                Next
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block modals %}
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="createupdateform">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form class="modal-content modalForm shadow bg-gray-700 border border-dark" autocomplete="off" method="post">
+            <div class="modal-header border-bottom border-dark py-2">
+                <h5 class="modal-title d-flex align-items-center twxt-white" id="modelTitle"></h5>
+                <button type="button" class="btn-close text-reset shadow-none btn-light"
+                    data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="hiddenFields"></div>
+                <div class="row">
+                    <div class="form-group mb-3 col-sm-12">
+                        <label class="fw-bold mb-0 font-14 text-muted" for="name">Name</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="name"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-12">
+                        <label class="fw-bold mb-0 font-14 text-muted" for="description">Description</label>
+                        <textarea id="description"
+                            class="form-control shadow-none border border-dark bg-dark text-white h-250"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 px-3 d-flex align-items-center border-top border-dark bg-transparent">
+                <button class="w-50 btn btn-secondary font-14 me-2 rounded-pill fw-bold" data-bs-dismiss="modal"
+                    type="button">
+                    Cancel
+                </button>
+                <button class="w-50 btn btn-dark font-14 ms-2 rounded-pill fw-bold" id="btn" type="submit">
+                    Proceed
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'modules/note/listing.js' %}"></script>
+<script src="{% static 'modules/note/create.js' %}"></script>
+<script src="{% static 'modules/note/update.js' %}"></script>
+<script src="{% static 'modules/note/detail.js' %}"></script>
+<script src="{% static 'modules/note/delete.js' %}"></script>
+{% endblock %}

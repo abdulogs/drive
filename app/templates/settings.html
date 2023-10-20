@@ -1,0 +1,132 @@
+{% extends "layouts/secondary.html" %}
+
+{% load static %}
+
+{% load helpers %}
+
+{% block title %} Settings - {% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active fw-bold text-primary">Settings</li>
+{% endblock %}
+
+
+{% block content %}
+<section class="overflow-auto h-100">
+    <div class="container-fluid mt-2 mb-5">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <form id="settings" class="card shadow rounded-4 border border-dark bg-gray-700 text-white">
+                    <div class="card-header bg-transparent border-0 p-3">
+                        <h5 class="modal-title d-flex align-items-center">
+                            <b class="bx bx-cog me-2 font-20 text-primary bg-dark p-2 rounded-circle"></b>
+                            <b class="font-26">Settings</b>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="m-0 fw-semibold font-14 p-2 px-3 bg-dark text-white rounded-2 mb-3">
+                                    Document access request email settings
+                                </h3>
+                            </div>
+                            <!-- <div class="form-group col-sm-12 mb-4">
+                                <div class="form-check form-switch mb-2 font-16 col-12 d-flex align-items-center">
+                                    <input class="form-check-input" type="checkbox" id="is_approved" name="is_approved"
+                                        {{ setting.is_approved | is_checked:1 }}>
+                                    <label class="form-check-label fw-bold ms-3" for="is_approved">
+                                        Is auto approved allow
+                                    </label>
+                                </div>
+                            </div> -->
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="request_email">Email</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="request_email" type="text" value="{{ setting.request_email  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="request_subject">Subject</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="request_subject" type="text"
+                                    value="{{ setting.request_subject  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-3">
+                                <label class="mb-0 font-14 fw-bold" for="request_message">Message</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="request_message" type="text"
+                                    value="{{ setting.request_message  | default:''}}" />
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 class="m-0 fw-semibold font-14 p-2 px-3 bg-dark text-white rounded-2 mb-3">
+                                    Document approval email settings
+                                </h3>
+                            </div>
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="approval_email">Email</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="approval_email" type="text" value="{{ setting.approval_email  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="approval_subject">Subject</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="approval_subject" type="text"
+                                    value="{{ setting.approval_subject  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-3">
+                                <label class="mb-0 font-14 fw-bold" for="approval_message">Message</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="approval_message" type="text"
+                                    value="{{ setting.approval_message  | default:''}}" />
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 class="m-0 fw-semibold font-14 p-2 px-3 bg-dark text-white rounded-2 mb-3">
+                                    Document remainder email settings
+                                </h3>
+                            </div>
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="remainder_email">Email</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="remainder_email" type="text"
+                                    value="{{ setting.remainder_email  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-2">
+                                <label class="mb-0 font-14 fw-bold" for="remainder_subject">Subject</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="remainder_subject" type="text"
+                                    value="{{ setting.remainder_subject  | default:''}}" />
+                            </div>
+                            <div class="form-group col-sm-12 mb-3">
+                                <label class="mb-0 font-14 fw-bold" for="remainder_message">Message</label>
+                                <input
+                                    class="form-control form-control-lg shadow-none font-14 text-white bg-dark border border-dark"
+                                    id="remainder_message" type="text"
+                                    value="{{ setting.remainder_message  | default:''}}" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer text-center bg-transparent border-0 p-3">
+                        <button class="btn btn-primary rounded-pill px-4 py-2 font-14 fw-bold" id="btn" type="submit">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<!-- Module -->
+<script src="{% static 'modules/settings.js' %}"></script>
+{% endblock %}

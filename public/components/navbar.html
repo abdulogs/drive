@@ -1,0 +1,69 @@
+{% load static %}
+
+{% load helpers %}
+
+{% load active_link_tags %}
+
+<nav class="navbar navbar-expand-sm py-1 sticky-top mb-3 bg-black border-bottom border-dark">
+    <div class="container container-sm container-md container-lg container-xl container-xxl">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'images/logo.png' %}" class="d-inline-block" width="200">
+        </a>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item px-2">
+                    <a class="nav-link font-14 text-white fw-bold {% active_link 'team' 'active' %}"
+                        href="{% url 'team' %}">
+                        Team
+                    </a>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link font-14 text-white fw-bold {% active_link 'notes' 'active' %}"
+                        href="{% url 'notes' %}">
+                        Notes
+                    </a>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link font-14 text-white fw-bold {% active_link 'files' 'active' %}"
+                        href="{% url 'files' %}">
+                        Files
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="dropdown">
+                <button class="btn btn-sm p-1 shadow bg-primary d-inline-block size-35 rounded-circle" type="button"
+                    data-bs-toggle="dropdown">
+                    <img src="{{ user.avatar | placeholder }}"
+                        class="rounded-circle w-100 h-100 object-cover avatar-image"
+                        alt="{{ user.first_name }} {{ user.last_name }}">
+                </button>
+                <ul class="dropdown-menu shadow border-0 dropdown-menu-end bg-dark">
+                    <li>
+                        <a class="dropdown-item py-2 d-flex align-items-center text-light bg-dark" href="{% url 'profile' %}">
+                            <span class="bx bx-user-circle font-20 me-2"></span>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2 d-flex align-items-center text-light bg-dark" href="{% url 'settings' %}">
+                            <span class="bx bx-cog font-20 me-2"></span>
+                            Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2 d-flex align-items-center text-light bg-dark" href="{% url 'logout' %}"
+                            onclick="logout()">
+                            <span class="bx bx-log-out font-20 me-2"></span> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button
+                class="bx bx-menu btn font-18 bg-white rounded-circle p-2 ms-2 shadow d-md-none d-lg-none d-inline-block"
+                type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            </button>
+        </div>
+    </div>
+</nav>

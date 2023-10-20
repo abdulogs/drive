@@ -1,0 +1,35 @@
+{% extends 'layouts/primary.html' %}
+
+{% load static %}
+
+{% block title %} Error [403] - Forbidden - {% endblock %}
+
+{% block seo %} {% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 col-xll-2 d-flex flex-column justify-content-center vh-100">
+    <div class="card bg-gray-700 border-dark border p-4 text-center">
+        <div class="card-header bg-transparent p-0 border-0">
+            <h1 class="text-danger m-0 mb-2 display-4"><b>
+                    Forbidden request
+                </b></h1>
+        </div>
+        <div class="card-body p-0">
+            <p class="m-0 fw-bold mb-3 text-muted">
+                The page you are trying to access has restricted access.
+                Please refer to your system administrator
+            </p>
+        </div>
+        <div class="card-footer bg-transparent text-white p-0 border-0">
+            <a href="/" class="btn btn-primary btn-sm p-2 px-4"> Go back </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,24 @@
+/* Border variables */
+
+/* Border width */
+$border-width: 1px;
+$border-widths: (
+    1: 1px,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+    5: 5px
+);
+
+/* Border preferences */
+$border-style: solid;
+$border-color: $gray-300;
+$border-color-translucent: rgba($black, .175);
+
+/* Border radius */
+$border-radius: .375rem;
+$border-radius-sm: .25rem;
+$border-radius-lg: .5rem;
+$border-radius-xl: 1rem;
+$border-radius-2xl: 2rem;
+$border-radius-pill: 50rem;

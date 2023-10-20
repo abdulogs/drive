@@ -1,0 +1,168 @@
+{% extends 'layouts/primary.html' %}
+
+{% load static %}
+
+{% block title %} Get access {% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'libs/intl-tel-input/css/intlTelInput.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-6 col-xll-2 d-flex flex-column justify-content-center py-5 mt-5">
+    <form class="card border-0 shadow rounded-4 p-2 bg-gray-700 position-relative z-index-999 " id="requestForm">
+        <div class="card-header bg-transparent border-0 pt-4">
+            <h1 class="text-center fw-bold m-0 font-30 mb-1 text-white">Request acess</h1>
+            <p class="text-center text-muted m-0 font-14">Please provide us details</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group mb-3">
+                        <label for="name" class="fw-bold text-white">Name</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="name">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="email" class="fw-bold text-white">Email</label>
+                        <input type="email"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="email">
+                        <p class="text-warning"><b>Verify your email address</b> <a href="javascript:void(0)"
+                                class="text-muted fw-bold" id="sendOtp">Send</a></p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="code" class="fw-bold text-white d-block">Code</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold w-100"
+                            id="code">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group mb-3">
+                        <label for="phone" class="fw-bold text-white d-block">Phone</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 ps-5 border-0 font-14 bg-dark text-white mb-1 fw-bold w-100"
+                            id="phone">
+                    </div>
+                </div>
+                <div class="col-sm-12 pb-4">
+                    <p class="text-muted">
+                        By entering the information and checking on the "I Accept" checkbox below, you confirm that
+
+                    </p>
+                    <ul class="text-muted">
+                        <li>
+                            You are not a resident of and/or domiciled in the United States of America.
+                        </li>
+                        <li>You are not a US person</li>
+                        <li>
+                            You will not transmit or otherwise send any information contained in the following document
+                            to
+                            any person located or resident in the United States of America
+                        </li>
+                    </ul>
+                    <div class="form-check form-switch mb-2 col-12">
+                        <input class="form-check-input" type="checkbox" id="is_not_us_citizen" name="is_not_us_citizen">
+                        <label class="form-check-label fw-bold text-muted" for="is_not_us_citizen">I Accept
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="country" class="fw-bold text-white">Country</label>
+                        <select
+                            class="form-control form-select shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="country"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="province" class="fw-bold text-white">Province</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="province">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="city" class="fw-bold text-white">City</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="city">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group mb-3">
+                        <label for="postal_code" class="fw-bold text-white">Postal code</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="postal_code">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group mb-4">
+                        <label for="address" class="fw-bold text-white">Address</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="address">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group mb-4">
+                        <label for="company" class="fw-bold text-white">Company</label>
+                        <input type="text"
+                            class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                            id="company">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="is_agreed">
+                        <label class="form-check-label text-white" for="is_agreed">
+                            I have read the
+                            <a href="" class="link-primary fw-bold">
+                                privacy policy
+                            </a> and
+                            <a href="" class="link-primary fw-bold">
+                                terms & Conditions
+                            </a>.
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="card-footer bg-transparent border-0 text-center pb-4 text-center">
+            <button type="submit" class="btn btn-dark p-2 px-3 mb-2 font-14 fw-bold" id="btn">
+                Proceed
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/countries.js' %}"></script>
+<script src="{% static 'libs/intl-tel-input/js/intlTelInput.min.js' %}"></script>
+<script>
+    var input = document.querySelector("#phone");
+    var phone = window.intlTelInput(input, {
+        initialCountry: "auto",
+        utilsScript: "{% static 'libs/intl-tel-input/js/utils.js' %}",
+    });
+
+    input.addEventListener("input", function () {
+        console.log(phone.getNumber());
+    })
+
+</script>
+<script src="{% static 'modules/request.js' %}"></script>
+{% endblock %}

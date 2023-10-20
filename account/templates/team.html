@@ -1,0 +1,245 @@
+{% extends 'layouts/secondary.html' %}
+
+{% load static %}
+
+{% load helpers %}
+
+{% block title %} Team - {% endblock %}
+
+{% block content %}
+<div class="card shadow  bg-gray-700 rounded-4 border-0 h-100">
+    <div class="card-header py-2 bg-transparent border-0">
+        <div class="d-flex align-items-center">
+            <h3 class="card-title m-0 d-flex align-items-center me-auto">
+                <b class="bx bx-edit p-2 bg-dark text-primary rounded-circle me-1"></b>
+                <div class="d-flex flex-column ms-1">
+                    <b class="font-20 text-white">Team</b>
+                    <div class="breadcrumb font-12 m-0 mt-1">
+                        <a href="{% url 'index' %}" class="breadcrumb-item text-decoration-none text-white bx bx-home">
+                        </a>
+                        <a href="{% url 'files' %}" class="breadcrumb-item text-decoration-none text-white">
+                            Team
+                        </a>
+                        <a href="javascript:void(0)" class="breadcrumb-item text-decoration-none text-primary">All</a>
+                    </div>
+                </div>
+            </h3>
+            <div class="d-flex align-items-center ms-auto">
+                <button class="btn btn-dark shadow-sm font-14 fw-bold rounded-pill d-flex align-items-center createBtn">
+                    <span class="bx bx-plus-circle me-1"></span> New
+                </button>
+            </div>
+        </div>
+        <form id="filter" autocomplete="off">
+            <div class="row align-items-center">
+                <div class="col-sm-3">
+                    <div class="input-group font-12 px-2 bg-dark rounded-2 my-2">
+                        <input type="text"
+                            class="form-control shadow-none border-0 rounded-0 bg-dark text-white font-14 text-white"
+                            id="search" placeholder="Search...">
+                        <button
+                            class="input-group-text bx bx-search shadow-none border-0 text-white bg-transparent rounded-0 font-16"
+                            type="submit"></button>
+                    </div>
+                </div>
+                <div class="col-sm-9 d-flex">
+                    <div class="d-flex align-items-center my-2">
+                        <span class="bx bx-sort-alt-2 font-16 text-primary me-2"></span>
+                        <span class="input-group-text fw-bold bg-transparent border-0 p-0 text-white">Sort</span>
+                        <select id="ordering"
+                            class="form-select form-control shadow-none border-0 bg-gray-700 font-14 text-white">
+                            <option value="-id">Recent</option>
+                            <option value="id">Oldest</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center my-2">
+                        <span class="bx bx-category-alt font-16 text-primary me-2"></span>
+                        <span class="input-group-text fw-bold bg-transparent border-0 p-0 text-white">Records</span>
+                        <select id="limit"
+                            class="form-select form-control shadow-none border-0 bg-gray-700 font-14 text-white">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="80">80</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body p-0 table-responsive h-100">
+        <table class="table m-0">
+            <thead class="bg-dark text-white">
+                <th class="font-14 text-nowrap fw-bold border-dark px-3">Member</th>
+                <th class="font-14 text-nowrap fw-bold border-dark">Email</th>
+                <th class="font-14 text-nowrap fw-bold border-dark">Active</th>
+                <th class="font-14 text-nowrap fw-bold border-dark">Role</th>
+                <th class="font-14 text-nowrap fw-bold border-dark">Created at</th>
+                <th class="font-14 text-nowrap fw-bold border-dark px-3">Controls</th>
+                </tr>
+            </thead>
+            <tbody id="listing" class="font-12"></tbody>
+        </table>
+    </div>
+    <div class="card-footer py-2 bg-transparent d-flex align-items-center">
+        <p class="m-0 font-14 fw-bold text-white" id="totalCount"></p>
+        <div class="d-flex align-items-center ms-auto">
+            <button type="button" class="btn rounded-pill me-1 btn-dark px-3 fw-bold font-12" id="previousBtn"
+                value="1">
+                Previous
+            </button>
+            <button type="button" class="btn rounded-pill ms-1 btn-dark px-3 fw-bold font-12" id="nextBtn" value="1">
+                Next
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block modals %}
+<!-- Basic -->
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="createupdateform">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+        <form class="modal-content modalForm shadow bg-gray-700 border border-dark" autocomplete="off" method="post">
+            <div class="modal-header border-bottom border-dark py-2">
+                <h5 class="modal-title d-flex align-items-center text-white" id="modelTitle"></h5>
+                <button type="button" class="btn-close text-reset shadow-none btn-light"
+                    data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="hiddenFields"></div>
+                <div class="row">
+                    <div class="form-group mb-3 col-sm-6">
+                        <label class="fw-bold mb-0 font-14 text-white" for="firstname">Firstname</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="firstname"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-6">
+                        <label class="fw-bold mb-0 font-14 text-white" for="lastname">Lastname</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="lastname"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-6">
+                        <label class="fw-bold mb-0 font-14 text-white" for="username">Username</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="username"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-6">
+                        <label class="fw-bold mb-0 font-14 text-white" for="email">Email</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="email"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-6 password-field">
+                        <label class="fw-bold mb-0 font-14 text-white" for="password">Password</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="password"
+                            type="text" />
+                    </div>
+                    <div class="form-group mb-3 col-sm-6 password-field">
+                        <label class="fw-bold mb-0 font-14 text-white" for="password2">Confirm password</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="password2"
+                            type="text" />
+                    </div>
+
+                    <div class="form-group col-sm-12">
+                        <div class="form-check form-switch mb-2 col-12">
+                            <input class="form-check-input" type="checkbox" id="is_superuser" name="is_superuser">
+                            <label class="form-check-label fw-bold text-muted" for="is_superuser">Superuser</label>
+                        </div>
+                        <div class="form-check form-switch mb-2 col-12">
+                            <input class="form-check-input" type="checkbox" id="is_staff" name="is_staff">
+                            <label class="form-check-label fw-bold text-muted" for="is_staff">Staff</label>
+                        </div>
+                        <div class="form-check form-switch mb-2 col-12">
+                            <input class="form-check-input" type="checkbox" id="is_email_verified"
+                                name="is_email_verified">
+                            <label class="form-check-label fw-bold text-muted" for="is_email_verified">Verify
+                                email</label>
+                        </div>
+                        <div class="form-check form-switch mb-2 col-12">
+                            <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+                            <label class="form-check-label fw-bold text-muted" for="is_active">Active</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 px-3 d-flex align-items-center border-top border-dark bg-transparent">
+                <button class="w-50 btn btn-secondary font-14 me-2 rounded-pill fw-bold" data-bs-dismiss="modal"
+                    type="button">
+                    Cancel
+                </button>
+                <button class="w-50 btn btn-dark font-14 ms-2 rounded-pill fw-bold" id="btn" type="submit">
+                    Proceed
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Change password -->
+<div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="changepasswordform">
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+        <form class="modal-content shadow bg-gray-700 border border-dark" id="change-password" autocomplete="off"
+            method="post">
+            <div class="modal-header border-bottom border-dark py-2">
+                <h5 class="modal-title d-flex align-items-center text-white">
+                    <b class="bx bx-lock me-2 font-20 text-primary bg-dark p-2 rounded-circle"></b>
+                    <b>Change password</b>
+                </h5>
+                <button type="button" class="btn-close text-reset shadow-none btn-light"
+                    data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-12 mb-3">
+                        <label class="fw-bold mb-0 font-14 text-white" for="newpassword">Password</label>
+                        <input type="hidden" id="userid">
+                        <input class="form-control shadow-none border border-dark bg-dark text-white" id="newpassword"
+                            type="password" />
+                    </div>
+                    <div class="form-group col-sm-12 mb-3">
+                        <label class="fw-bold mb-0 font-14 text-white" for="confrimpassword">Confirm password</label>
+                        <input class="form-control shadow-none border border-dark bg-dark text-white"
+                            id="confrimpassword" type="password" />
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 px-3 d-flex align-items-center border-top border-dark bg-transparent">
+                <button class="w-50 btn btn-secondary font-14 me-2 rounded-pill fw-bold" data-bs-dismiss="modal"
+                    type="button">
+                    Cancel
+                </button>
+                <button class="w-50 btn btn-dark font-14 ms-2 rounded-pill fw-bold" id="btn" type="submit">
+                    Proceed
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function is_role(data) {
+        let roles = "";
+        if (data.is_staff == true) {
+            roles += `<span class="bg-primary font-12 badge rounded-pill px-2 mx-1 text-dark">Staff</span>`;
+        }
+        if (data.is_superuser == true) {
+            roles += `<span class="bg-primary font-12 badge rounded-pill px-2 mx-1 text-dark">Superuser</span>`;
+        }
+        return roles;
+    }
+</script>
+
+<!-- Modules -->
+<script src="{% static 'modules/team/listing.js' %}"></script>
+<script src="{% static 'modules/team/create.js' %}"></script>
+<script src="{% static 'modules/team/update.js' %}"></script>
+<script src="{% static 'modules/team/delete.js' %}"></script>
+<script src="{% static 'modules/team/detail.js' %}"></script>
+{% endblock %}

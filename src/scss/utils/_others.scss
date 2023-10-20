@@ -1,0 +1,45 @@
+.delete_from_cart.bx-trash {
+    background-color: #FF7474 !important;
+    color: white;
+    border: none !important;
+
+    &:hover {
+        background-color: #e93434 !important;
+        color: white;
+    }
+}
+
+.badge-pending {
+    background-color: rgba(6, 113, 212, 0.15);
+    color: rgba(6, 113, 212, 1);
+}
+
+.badge-progress {
+    background-color: rgba(253, 167, 0, 0.15);
+    color: rgba(253, 167, 0, 1);
+}
+
+.badge-dispatched {
+    background-color: rgba(42, 180, 25, 0.15);
+    color: rgba(42, 180, 25, 1);
+}
+
+.badge-failed {
+    background-color: rgba(245, 4, 4, 0.15);
+    color: rgba(245, 4, 4, 1);
+}
+
+.badge-delivered {
+    background-color: rgba(42, 180, 25, 0.15);
+    color: rgba(42, 180, 25, 1);
+}
+
+.badge-refunded {
+    background-color: rgba(190, 57, 86, 0.15);
+    color: rgba(190, 57, 86, 1);
+}
+
+.badge-returned {
+    background-color: rgba(255, 86, 124, 1);
+    color: rgba(255, 86, 124, 1);
+}

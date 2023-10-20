@@ -1,0 +1,29 @@
+/*!
+* UOM
+* Author:
+* Author URI:
+* Description:
+*/
+
+/* Note: Please do not change the orders of files */
+
+/* Google Fonts - Lora, Poppins & Inter */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+/* Configuration file */
+@import "./config";
+/* Imports */
+@import "./_imports/imports";
+/* Bootstrap */
+@import "_bootstrap/bootstrap";
+/*  1. Core app */
+@import "./app/_app";
+/*  2. Fonts */
+@import "./fonts/_fonts";
+/*  3. Libs */
+@import "./libs/_libs";
+/*  4. Components */
+@import "./components/_components";
+/*  5. Utils */
+@import "./utils/_utils";
+/*  6. Pages*/
+@import "./pages/_pages";

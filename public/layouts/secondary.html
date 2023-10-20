@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %} {% endblock %} HyperScaleNexus</title>
+    {% include "components/head.html" %}
+    {% block styles %} {% endblock %}
+    <style>
+        .nav-item .active {
+            color: var(--bs-success) !important;
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-black font-1-normal overflow-auto">
+    {% include "components/navbar.html" %}
+    <main
+        class="container container-sm container-md container-lg container-xl container-xxl h-100 d-flex flex-column mb-4">
+        {% block content %} {% endblock %}
+    </main>
+
+    <!-- Create or update -->
+    {% block modals %} {% endblock %}
+    <!-- Create or update -->
+
+    <!-- Details -->
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="detailsModal">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+            <div class="modal-content shadow bg-gray-700 border border-dark">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title d-flex align-items-center text-white">
+                        <b class="bx bx-show me-2 font-20 text-primary bg-dark p-2 rounded-circle"></b>
+                        <b>Details</b>
+                    </h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-white" id="details"></div>
+                <div class="modal-footer bg-transparent border-0"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Details -->
+
+    <!-- Confirm box -->
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="confirmbox">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content shadow bg-gray-700 border border-dark">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title font-14 fw-normal m-0 d-flex align-items-center">
+                        <span class="bx bx-info-circle me-2 font-20 text-warning"></span>
+                        <b id="confirmTitle" class="text-white">Are you sure?</b>
+                    </h5>
+                    <button type="button" class="btn-close deleteNo" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-1">
+                    <p id="confirmDescription" class="m-0 font-14 text-white"></p>
+                </div>
+                <div class="modal-footer border-0 py-2">
+                    <button type="button" class="btn btn-light fw-bold deleteNo" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger fw-bold deleteYes" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Confirm box -->
+
+    <!-- Message -->
+    <div id="response" class="toast-container p-3 top-0 start-50 translate-middle-x position-fixed"></div>
+    <div id="loader" class="toast-container p-3 top-0 start-50 translate-middle-x position-fixed"></div>
+    <!-- Message -->
+
+    <input type="hidden" value="{{csrf_token}}" name="token" id="token">
+
+    <!-- Page scripts -->
+    {% include "components/scripts.html" %}
+    {% block scripts %} {% endblock %}
+    <script src="{% static 'js/filters.js' %}"></script>
+    <!-- Page scripts -->
+</body>
+
+</html>

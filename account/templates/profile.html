@@ -1,0 +1,106 @@
+{% extends 'layouts/secondary.html' %}
+
+{% load static %}
+
+{% load helpers %}
+
+{% block title %} {{ user.first_name }} {{ user.last_name }} - {% endblock %}
+
+{% block content %}
+<div class="container-fluid my-3">
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form id="changeavatar" class="d-flex flex-column justify-content-center align-items-center"
+                enctype="multipart/form-data">
+                <div class="size-200">
+                    <img src="{{ user.avatar | placeholder }}"
+                        class="rounded-circle img-thumbnail object-cover h-100 w-100"
+                        alt="{{ user.first_name }} {{ user.last_name }}" id="output">
+                </div>
+                <div class="d-flex mb-3 mt-2 align-items-center align-content-center">
+                    <label class="btn btn-dark rounded-pill px-4 py-2 font-14 fw-bold" for="image">
+                        <input class="form-file-input" id="image" type="file" accept="image/*"
+                            onchange="loadFile(event)" hidden />
+                        <span id="btn1">Upload</span>
+                    </label>
+                    <div id="uploadbtn"></div>
+                </div>
+            </form>
+            <form id="aboutdetails" class="card shadow rounded-4 border-0 mb-4 bg-gray-700">
+                <div class="card-header bg-transparent border-0 p-3">
+                    <h5 class="card-title d-flex align-items-center">
+                        <b class="bx bx-lock me-2 font-20 text-light bg-dark p-2 rounded-circle"></b>
+                        <b class="font-20 text-white">General</b>
+                    </h5>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="firstname">Firstname</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="firstname" type="text" value="{{ user.first_name | default:"" }}" />
+                        </div>
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="lastname">Lastname</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="lastname" type="text" value="{{ user.last_name | default:"" }}" />
+                        </div>
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="username">Username</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="username" type="text" value="{{ user.username | default:"" }}" />
+                        </div>
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="email">Email</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="email" type="text" value="{{ user.email | default:"" }}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center bg-transparent border-0 p-3">
+                    <button class="btn btn-dark rounded-pill px-4 py-2 font-14 fw-bold" id="btn" type="submit">
+                        Update
+                    </button>
+                </div>
+            </form>
+            <form id="changepassword" class="card shadow rounded-4 border-0 mb-4 bg-gray-700">
+                <div class="card-header bg-transparent border-0 p-3">
+                    <h5 class="card-title d-flex align-items-center">
+                        <b class="bx bx-lock me-2 font-20 text-light bg-dark p-2 rounded-circle"></b>
+                        <b class="font-20 text-white">Change password</b>
+                    </h5>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="password">New password</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="password" type="password" />
+                        </div>
+                        <div class="form-group col-sm-6 mb-3">
+                            <label class="mb-0 font-14 fw-bold text-white" for="password2">Confirm password</label>
+                            <input
+                                class="form-control shadow-none p-2 px-4 border-0 font-14 bg-dark text-white mb-1 fw-bold"
+                                id="password2" type="password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center bg-transparent border-0 p-3">
+                    <button class="btn btn-dark rounded-pill px-4 py-2 font-14 fw-bold" id="btn3" type="submit">
+                        Change
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'modules/account/profile.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,9 @@
+$fs: 8;
+
+@while $fs < 40 {
+    $fs: $fs +2;
+
+    .font-#{$fs} {
+        font-size: $fs + px;
+    }
+}

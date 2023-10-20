@@ -1,0 +1,14 @@
+$size: 20;
+
+@while $size < 200 {
+    $size: $size +5;
+
+    .size-#{$size} {
+        height: $size + px;
+        min-height: $size + px;
+        max-height: $size + px;
+        width: $size + px;
+        min-width: $size + px;
+        max-width: $size + px;
+    }
+}
